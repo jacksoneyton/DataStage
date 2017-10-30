@@ -1,0 +1,16 @@
+VERSION 6
+IF $1 <> 0
+THEN (
+	IF (IsValid("date",Right("0":Change(Trim(DecimalToString($1,"suppress_zero")," ","B"),".",""),8),"%mm%dd%yyyy") AND (Abs(YearFromDate(StringToDate(Right("0":Change(Trim(DecimalToString($1,"suppress_zero")," ","B"),".",""),8),"%mm%dd%yyyy")) - CurrentYear) < 100))
+	THEN StringToDate(Right("0":Change(Trim(DecimalToString($1,"suppress_zero")," ","B"),".",""),8),"%mm%dd%yyyy")
+	ELSE (
+		IF (IsValid("date",Right("0":Change(Trim(DecimalToString($1,"suppress_zero")," ","B"),".",""),7),"%yyyy%ddd") AND (Abs(YearFromDate(StringToDate(Right(Change(Trim(DecimalToString($1,"suppress_zero")," ","B"),".",""),7),"%yyyy%ddd")) - CurrentYear) < 100))
+		THEN StringToDate(Right(Change(Trim(DecimalToString($1,"suppress_zero")," ","B"),".",""),7),"%yyyy%ddd")
+		ELSE (
+			IF (IsValid("date",Right("0":Change(Trim(DecimalToString($1,"suppress_zero")," ","B"),".",""),6),"%mm%dd%1950yy") AND (Abs(yearFromDate(StringToDate(Right("0":Change(Trim(DecimalToString($1,"suppress_zero")," ","B"),".",""),6),"%mm%dd%1950yy")) - CurrentYear) < 100))
+			THEN StringToDate(Right("0":Change(Trim(DecimalToString($1,"suppress_zero")," ","B"),".",""),6),"%mm%dd%1950yy")
+			ELSE SetNull()
+			)
+		)
+	)
+ELSE SetNull()
