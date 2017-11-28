@@ -36,35 +36,36 @@ __    ______________`r
     $ColPrecision = Read-Host "Column Length"
     $ColScale = Read-Host "Column Scale (If no scale, enter 0)"
     
-    $TrxOutput = $XmlMod.DSExport.Job.Record | Where-Object {$_.Type -Match "TrxOutput"}
-    $OutputColumn = $TrxOutput.Collection | Where-Object {$_.Type -Match "OutputColumn"}
+    $TrxOutputs = $xmlfile.DSExport.Job.Record | Where-Object {$_.Type -Match "TrxOutput"}
+    Foreach ($Trx in $TrxOutputs) {
+        $OutputColumns = $Trx.Collection | Where-Object {$_.Type -Match "OutputColumn"}
+        Foreach ($OutputColumn in $OutputColumns) {
+            Foreach ($SubRecord in $OutputColumn.SubRecord) {
+                $SqlType = $SubRecord.Property | Where-Object {$_.Name -eq 'SqlType'}
+                $Precision = $SubRecord.Property | Where-Object {$_.Name -eq 'Precision'}
+                $Scale = $SubRecord.Property | Where-Object {$_.Name -eq 'Scale'}
 
-    Foreach ($SubRecord in $OutputColumn.SubRecord) {
-        $SqlType = $SubRecord.Property | Where-Object {$_.Name -eq 'SqlType'}
-        $Precision = $SubRecord.Property | Where-Object {$_.Name -eq 'Precision'}
-        $Scale = $SubRecord.Property | Where-Object {$_.Name -eq 'Scale'}
+                If ($SqlType.InnerXml -eq $SourceColumnTypeID) {
+                    $SqlType.InnerXml = $DestColumnTypeID
+                    $Precision.InnerXml = $ColPrecision
 
-        If ($SqlType.InnerXml -eq $SourceColumnTypeID) {
-            $SqlType.InnerXml = $DestColumnTypeID
-            $Precision.InnerXml = $ColPrecision
-
-            If ((($DestColumnTypeID -eq '3') -or ($DestColumnTypeID -eq '2')) -and ($Scale.InnerXml -gt '0')) {
-                $Scale.InnerXml = $ColScale
+                    If ((($DestColumnTypeID -eq '3') -or ($DestColumnTypeID -eq '2')) -and ($Scale.InnerXml -gt '0')) {
+                        $Scale.InnerXml = $ColScale
+                    }
+                    Elseif ((($DestColumnTypeID -eq '3') -or ($DestColumnTypeID -eq '2')) -and ($Scale.InnerXml -eq '0')) {
+                        
+                    }
+                    Else {
+                        $Scale.InnerXml = $ColScale
+                    }    
+                }
             }
-            Elseif ((($DestColumnTypeID -eq '3') -or ($DestColumnTypeID -eq '2')) -and ($Scale.InnerXml -eq '0')) {
-                
-            }
-            Else {
-                $Scale.InnerXml = $ColScale
-            }
-            
         }
-    }
+	}
 $Continue = Read-Host "Would you like to make any further modifications?"
 If (($Continue -eq 'y') -or ($Continue -eq 'Y') -or ($Continue -eq 'yes') -or ($Continue -eq 'Yes') -or ($Continue -eq 'YES')) {
-        $XmlMod = Set-ColumnModifications -XmlMod $XmlMod
-    }
-	
+            $XmlMod = Set-ColumnModifications -XmlMod $XmlMod
+        }
 return $XmlMod
 }
 
