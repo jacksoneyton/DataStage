@@ -45,15 +45,13 @@ __    ______________`r
         $Scale = $SubRecord.Property | Where-Object {$_.Name -eq 'Scale'}
 
         If ($SqlType.InnerXml -eq $SourceColumnTypeID) {
-            If ($SourceColumnTypeID -ne $DestColumnTypeID) {
-                $SqlType.InnerXml = $DestColumnTypeID
-            }
+            $SqlType.InnerXml = $DestColumnTypeID
             $Precision.InnerXml = $ColPrecision
 
-            If (($DestColumnTypeID -eq '3') -and ($Scale.InnerXml -gt '0')) {
+            If ((($DestColumnTypeID -eq '3') -or ($DestColumnTypeID -eq '2')) -and ($Scale.InnerXml -gt '0')) {
                 $Scale.InnerXml = $ColScale
             }
-            Elseif (($DestColumnTypeID -eq '3') -and ($Scale.InnerXml -eq '0')) {
+            Elseif ((($DestColumnTypeID -eq '3') -or ($DestColumnTypeID -eq '2')) -and ($Scale.InnerXml -eq '0')) {
                 
             }
             Else {
@@ -62,6 +60,11 @@ __    ______________`r
             
         }
     }
+$Continue = Read-Host "Would you like to make any further modifications?"
+If (($Continue -eq 'y') -or ($Continue -eq 'Y') -or ($Continue -eq 'yes') -or ($Continue -eq 'Yes') -or ($Continue -eq 'YES')) {
+        $XmlMod = Set-ColumnModifications -XmlMod $XmlMod
+    }
+	
 return $XmlMod
 }
 
@@ -74,13 +77,7 @@ $InputFile = Get-Item $InputFileStr.Replace('"','')
 $OutputFile = Read-Host "Please enter the full file path to save the modified DataStage XML File"
 [xml]$XmlSource = Get-Content $InputFile.FullName
 
-    
 $XmlOut = Set-ColumnModifications -XmlMod $XmlSource
-$Continue = Read-Host "Would you like to make any further modifications?"
-If ($Continue -eq ('y' -or 'Y' -or 'yes' -or 'Yes' -or 'YES')) {
-        $XmlOut = Set-ColumnModifications -XmlMod $XmlOut
-    }
 
 $XmlOut.Save($OutputFile.replace('"',''))
 }
-
