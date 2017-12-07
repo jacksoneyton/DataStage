@@ -1,0 +1,98 @@
+Output from transformer compilation follows:
+
+##I IIS-DSEE-TFCN-00001 20:07:44(000) <main_program> 
+IBM InfoSphere DataStage Enterprise Edition 11.5.0.7555 
+Copyright (c) 2001, 2005-2015 IBM Corporation. All rights reserved
+ 
+
+
+##I IIS-DSEE-TFCN-00006 20:07:44(001) <main_program> conductor uname: -s=Windows Server 2008; -r=Service Pack 2; -v=6.0; -n=edserver; -m=x86-Intel
+##I IIS-DSEE-TOSH-00002 20:07:44(002) <main_program> orchgeneral: loaded
+##I IIS-DSEE-TOSH-00002 20:07:44(003) <main_program> orchsort: loaded
+##I IIS-DSEE-TOSH-00002 20:07:44(004) <main_program> orchstats: loaded
+##W IIS-DSEE-TOSH-00049 20:07:44(007) <main_program> Parameter specified but not used in flow: DSPXWorkingDir
+##W IIS-DSEE-TOSH-00049 20:07:44(008) <main_program> Parameter specified but not used in flow: DSPXWorkingDir
+##I IIS-DSEE-TCOS-00023 20:07:44(010) <main_program> Dump:
+{ 
+  text="transform -inputschema record ( Name: string[max=20];  Gender: string[1];  Ugly: nullable string[1]; )\r\n-outputschema record ( Name: string[max=20];  Gender: string[1];  Ugly: nullable string[1]; )\r\n-expressionfile RT_SC60/V0S1_CustomRoutine_Transformer_1.trx\r\n-flag compile\r\n-staticobj 'C:/CourseData/Custom/HelloWorld.obj'\r\n-compiler 'cl'\r\n-compileopt '/D APT_USE_ANSI_IOSTREAMS /D _WIN32 /D _MBCS /nologo /W3 /WX- /Gm- /EHa /MD /GS- /fp:precise /Zc:wchar_t- /Zc:forScope /Gd /TP /Zi /Oy- /c'\r\n-linker 'link'\r\n-linkopt '/INCREMENTAL:NO /NOLOGO /DLL /DEBUG /SUBSYSTEM:CONSOLE /DYNAMICBASE:NO /MACHINE:X86'\r\n-name V0S1_CustomRoutine_Transformer_1\r\n-dir C:/IBM/InformationServer/Server/Projects/DSProject/RT_BP60.O", 
+  line=1, column=1, name="", qualname="", 
+  op={ 
+       text="transform -inputschema record ( Name: string[max=20];  Gender: string[1];  Ugly: nullable string[1]; )\r\n-outputschema record ( Name: string[max=20];  Gender: string[1];  Ugly: nullable string[1]; )\r\n-expressionfile RT_SC60/V0S1_CustomRoutine_Transformer_1.trx\r\n-flag compile\r\n-staticobj 'C:/CourseData/Custom/HelloWorld.obj'\r\n-compiler 'cl'\r\n-compileopt '/D APT_USE_ANSI_IOSTREAMS /D _WIN32 /D _MBCS /nologo /W3 /WX- /Gm- /EHa /MD /GS- /fp:precise /Zc:wchar_t- /Zc:forScope /Gd /TP /Zi /Oy- /c'\r\n-linker 'link'\r\n-linkopt '/INCREMENTAL:NO /NOLOGO /DLL /DEBUG /SUBSYSTEM:CONSOLE /DYNAMICBASE:NO /MACHINE:X86'\r\n-name V0S1_CustomRoutine_Transformer_1\r\n-dir C:/IBM/InformationServer/Server/Projects/DSProject/RT_BP60.O", 
+       line=1, column=1, name=transform, qualname=transform, 
+       wrapout={},
+       wrapperfile=transform, kind=non_wrapper_cdi_op, exec_mode=none, 
+       args="'record ( Name: string[max=20];  Gender: string[1];  Ugly: nullable string[1]; )'-outputschema'record ( Name: string[max=20];  Gender: string[1];  Ugly: nullable string[1]; )'-expressionfile'RT_SC60/V0S1_CustomRoutine_Transformer_1.trx'-flag'compile'-staticobj'C:/CourseData/Custom/HelloWorld.obj'-compiler'cl'-compileopt'/D APT_USE_ANSI_IOSTREAMS /D _WIN32 /D _MBCS /nologo /W3 /WX- /Gm- /EHa /MD /GS- /fp:precise /Zc:wchar_t- /Zc:forScope /Gd /TP /Zi /Oy- /c'-linker'link'-linkopt'/INCREMENTAL:NO /NOLOGO /DLL /DEBUG /SUBSYSTEM:CONSOLE /DYNAMICBASE:NO /MACHINE:X86'-name'V0S1_CustomRoutine_Transformer_1'-dir'C:/IBM/InformationServer/Server/Projects/DSProject/RT_BP60.O'"
+     }
+}
+.
+##E IIS-DSEE-TFSR-00019 20:07:48(000) <main_program> Could not check all operators because of previous error(s)
+##W IIS-DSEE-TFTM-00012 20:07:48(001) <transform> Error when checking composite operator: The number of reject datasets "0" is less than the number of input datasets "1".
+##I IIS-DSEE-TBLD-00000 20:07:48(002) <main_program> Error when checking composite operator: Output from subprocess: V0S1_CustomRoutine_Transformer_1.C
+
+
+##I IIS-DSEE-TBLD-00000 20:07:48(003) <main_program> Error when checking composite operator: Output from subprocess: C:\IBM\InformationServer\Server\Projects\DSProject\RT_BP60.O\V0S1_CustomRoutine_Transformer_1.C(213) : warning C4101: 'output' : unreferenced local variable
+
+C:\IBM\InformationServer\Server\Projects\DSProject\RT_BP60.O\V0S1_CustomRoutine_Transformer_1.C(208) : warning C4101: 'input' : unreferenced local variable
+
+
+##I IIS-DSEE-TBLD-00000 20:07:48(004) <main_program> Error when checking composite operator: Output from subprocess: MSVCRT.lib(MSVCR100.dll) : error LNK2005: "public: virtual __thiscall std::exception::~exception(void)" (??1exception@std@@UAE@XZ) already defined in LIBCMT.lib(stdexcpt.obj)
+
+MSVCRT.lib(MSVCR100.dll) : error LNK2005: "public: __thiscall std::exception::exception(char const * const &)" (??0exception@std@@QAE@ABQBD@Z) already defined in LIBCMT.lib(stdexcpt.obj)
+
+MSVCRT.lib(MSVCR100.dll) : error LNK2005: "public: __thiscall std::exception::exception(class std::exception const &)" (??0exception@std@@QAE@ABV01@
+##I IIS-DSEE-TBLD-00000 20:07:48(005) <main_program> Error when checking composite operator: Output from subprocess: @Z) already defined in LIBCMT.lib(stdexcpt.obj)
+
+MSVCRT.lib(ti_inst.obj) : error LNK2005: "private: __thiscall type_info::type_info(class type_info const &)" (??0type_info@@AAE@ABV0@@Z) already defined in LIBCMT.lib(typinfo.obj)
+
+MSVCRT.lib(ti_inst.obj) : error LNK2005: "private: class type_info & __thiscall type_info::operator=(class type_info const &)" (??4type_info@@AAEAAV0@ABV0@@Z) already defined in LIBCMT.lib(typinfo.obj)
+
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; u
+##I IIS-DSEE-TBLD-00000 20:07:48(006) <main_program> Error when checking composite operator: Output from subprocess: se /NODEFAULTLIB:library
+
+
+##I IIS-DSEE-TBLD-00000 20:07:48(007) <main_program> Error when checking composite operator: Output from subprocess: V0S1_CustomRoutine_Transformer_1.tmp.o : warning LNK4217: locally defined symbol ?HelloUgly@@YAPADPAD@Z (char * __cdecl HelloUgly(char *)) imported in function "protected: virtual void __thiscall APT_TransformOperatorImplV0S1_CustomRoutine_Transformer_1::processInputRecordChild(int,int * const,int * const)" (?processInputRecordChild@APT_TransformOperatorImplV0S1_CustomRoutine_Transformer_1@@MAEXHQAH0@Z)
+
+C:\IBM\InformationServer\Server\Projects\DSProject\RT_BP60.O\V0S1_CustomRoutine_Transformer_1.dll : fata
+##I IIS-DSEE-TBLD-00000 20:07:48(008) <main_program> Error when checking composite operator: Output from subprocess: l error LNK1169: one or more multiply defined symbols found
+
+
+##E IIS-DSEE-TCOS-00029 20:07:48(009) <main_program> Creation of a step finished with status = FAILED. (CustomRoutine.Transformer_1)
+
+*** Internal Generated Transformer Code follows:
+0001: //
+0002: // Generated file to implement the V0S1_CustomRoutine_Transformer_1 transform operator.
+0003: //
+0004: 
+0005: // define external functions used
+0006: extern string HelloUgly(string inData);
+0007: 
+0008: // define our input/output link names
+0009: inputname 0 DataGen;
+0010: outputname 0 OUT;
+0011: 
+0012: initialize {
+0013:  // define our control variables
+0014:  int8 RowRejected0;
+0015:  int8 NullSetVar0;
+0016: 
+0017: }
+0018: 
+0019: mainloop {
+0020: 
+0021:  // declare our intermediate variables for this section
+0022:  string InterVar0_0;
+0023: 
+0024:  // initialise the rejected row variable
+0025:  RowRejected0 = 1;
+0026: 
+0027:  // evaluate columns (no constraints) for link: OUT
+0028:  InterVar0_0 = HelloUgly(DataGen.Ugly);
+0029:  OUT.Ugly = InterVar0_0;
+0030:  writerecord 0;
+0031:  RowRejected0 = 0;
+0032: }
+0033: 
+0034: finish {
+0035: }
+0036: 
+*** End of Internal Generated Transformer Code
