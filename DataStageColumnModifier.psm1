@@ -1,3 +1,5 @@
+
+##Start First Copy##
 Function Set-ColumnModifications {
     Param(
     [parameter(Mandatory=$true)]
@@ -67,9 +69,9 @@ If (($Continue -eq 'y') -or ($Continue -eq 'Y') -or ($Continue -eq 'yes') -or ($
 	
 return $XmlMod
 }
+##END First Copy##
 
-
-
+##Start Second Copy##
 function Set-DSColumns {
 #Collect File Info
 $InputFileStr = Read-Host "Please enter the path to the DataStage XML file"
@@ -81,3 +83,4 @@ $XmlOut = Set-ColumnModifications -XmlMod $XmlSource
 
 $XmlOut.Save($OutputFile.replace('"',''))
 }
+##END Second Copy##
