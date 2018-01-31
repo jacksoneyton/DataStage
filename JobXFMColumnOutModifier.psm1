@@ -45,6 +45,7 @@ __    ______________`r
         $SqlType = $SubRecord.Property | Where-Object {$_.Name -eq 'SqlType'}
         $Precision = $SubRecord.Property | Where-Object {$_.Name -eq 'Precision'}
         $Scale = $SubRecord.Property | Where-Object {$_.Name -eq 'Scale'}
+        $Extended = $SubRecord.Property |Where-Object {$_.Name -eq 'ExtendedPrecision' }
 
         If ($SqlType.InnerXml -eq $SourceColumnTypeID) {
             $SqlType.InnerXml = $DestColumnTypeID
@@ -60,6 +61,9 @@ __    ______________`r
                 $Scale.InnerXml = $ColScale
             }
             
+            If (($DestColumnTypeID -eq '12') -and ($Extended.InnerXml -gt '0')) {
+                $Extended.InnerXml = '0'
+            }
         }
     }
 $Continue = Read-Host "Would you like to make any further modifications?"
